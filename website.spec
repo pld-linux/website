@@ -1,7 +1,7 @@
 
 #
 # todo:
-# - catalog files...
+# - sgml catalog files?
 #
 
 Summary:	Website DTD and XSL stylesheets
@@ -27,8 +27,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define website_path	%{_datadir}/sgml/website
 %define dtd_path		%{website_path}/xml-dtd-%{version}
 %define xsl_path		%{website_path}/xsl-stylesheets-%{version}
-%define	xmlcat_file		%{dtd_path}/catalog.xml
-%define	sgmlcat_file	%{dtd_path}/catalog
+%define	xmlcat_file		%{website_path}/catalog.xml
+%define	sgmlcat_file	%{website_path}/catalog
 
 %description
 Website DTD and XSL stylesheets.
@@ -41,17 +41,49 @@ Arkusze Website DTD i XSL.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d
-$RPM_BUILD_ROOT{%{dtd_path},%{xsl_path},%{_examplesdir}/%{name}-%{version}}
+install -d $RPM_BUILD_ROOT{%{dtd_path},%{xsl_path},%{_examplesdir}/%{name}-%{version}}
 
 install *.dtd *.mod $RPM_BUILD_ROOT%{dtd_path}
-install xsl/* $RPM_BUILD_ROOT%{xsl_path}
-cp -a example/* %{_examplesdir}/%{name}-%{version}
+cp -a xsl/* $RPM_BUILD_ROOT%{xsl_path}
+cp -a example/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+
+xmlcatalog --noout --create --add "public" \
+	"-//Norman Walsh//DTD Website V%{version}//EN" \
+	"http://docbook.sourceforge.net/release/website/%{version}/website.dtd" \
+	$RPM_BUILD_ROOT%{xmlcat_file}
+
+%xmlcat_add_rewrite \
+	"http://docbook.sourceforge.net/release/website/%{version}" \
+	file://%{dtd_path} \
+	$RPM_BUILD_ROOT%{xmlcat_file}
+
+%xmlcat_add_rewrite \
+	http://docbook.sourceforge.net/release/website/xsl/%{version} \
+	file://%{xsl_path} \
+	$RPM_BUILD_ROOT%{xmlcat_file}
+
+%xmlcat_add_rewrite \
+	http://docbook.sourceforge.net/release/website/xsl/current \
+	file://%{xsl_path} \
+	$RPM_BUILD_ROOT%{xmlcat_file}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+if ! grep -q %{xmlcat_file} /etc/xml/catalog ; then
+    %xmlcat_add %{xmlcat_file}
+
+fi
+
+%preun
+if [ "$1" = "0" ] ; then
+    %xmlcat_del %{xmlcat_file}
+
+fi
 
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog README WhatsNew
 %{website_path}
+%{_examplesdir}/%{name}-%{version}
