@@ -7,14 +7,14 @@
 Summary:	Website DTD and XSL stylesheets
 Summary(pl):	Website DTD i arkusze XSL
 Name:		website
-Version:	2.5.0
+Version:	2.3
 Release:	1
 License:	Free
 Vendor:		Norman Walsh http://nwalsh.com/
 Group:		Applications/Publishing/XML
-Source0:	http://dl.sourceforge.net/docbook/%{name}-%{version}.tar.gz
-# Source0-md5:	747f59dec438c2b7e90fa597197c1d47
 URL:		http://docbook.sourceforge.net/projects/website/index.html
+Source0:	http://dl.sourceforge.net/sourceforge/docbook/%{name}-%{version}.tar.gz
+# Source0-md5:	4842b6866239b81c0537953b17f82d30
 Requires:	libxml2-progs >= 2.4.17-6
 BuildRequires:	rpm-build >= 4.0.2-94
 BuildRequires:	libxml2-progs
