@@ -5,7 +5,7 @@ Name:		website
 %define		subver 9
 Version:	%{ver}.%{subver}
 Release:	1
-License:	free (Copyright Norman Walsh)
+License:	Free (Copyright Norman Walsh)
 Vendor:		Norman Walsh http://nwalsh.com/
 Group:		Applications/Publishing/XML
 Source0:	http://www.nwalsh.com/website/%{version}}/ws%{ver}%{subver}.zip
