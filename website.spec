@@ -7,7 +7,7 @@
 Summary:	Website DTD and XSL stylesheets
 Summary(pl):	Website DTD i arkusze XSL
 Name:		website
-Version:	2.2
+Version:	2.3
 Release:	1
 License:	Free
 Vendor:		Norman Walsh http://nwalsh.com/
@@ -48,15 +48,8 @@ install *.dtd *.mod $RPM_BUILD_ROOT%{dtd_path}
 install xsl/* $RPM_BUILD_ROOT%{xsl_path}
 cp -a example/* %{_examplesdir}/%{name}-%{version}
 
-
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%post
-ln -sf xsl-stylesheets-%{version} %{_datadir}/sgml/website/xsl-stylesheets
-
-%preun
-rm -f %{_datadir}/sgml/website/xsl-stylesheets
 
 %files
 %defattr(644,root,root,755)
