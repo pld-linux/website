@@ -8,10 +8,6 @@ Release:	1
 License:	free (Copyright Norman Walsh)
 Vendor:		Norman Walsh http://nwalsh.com/
 Group:		Applications/Publishing/XML
-Group(de):	Applikationen/Publizieren/XML
-Group(es):	Aplicaciones/Editoración/XML
-Group(pl):	Aplikacje/Publikowanie/XML
-Group(pt_BR):	Aplicações/Editoração/XML
 Source0:	http://www.nwalsh.com/website/%{version}}/ws%{ver}%{subver}.zip
 URL:		http://www.nwalsh.com/website/
 Requires:	sgml-common >= 0.5
