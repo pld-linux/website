@@ -20,15 +20,15 @@ BuildRequires:	rpm-build >= 4.0.2-94
 BuildRequires:	/usr/bin/xmlcatalog
 PreReq:		libxml2
 PreReq:		sgml-common
-Requires(post,preun):   /usr/bin/install-catalog
-Requires(post,preun):   /usr/bin/xmlcatalog
+Requires(post,preun):	/usr/bin/install-catalog
+Requires(post,preun):	/usr/bin/xmlcatalog
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define website_path	%{_datadir}/sgml/website
-%define dtd_path		%{website_path}/xml-dtd-%{version}
-%define xsl_path		%{website_path}/xsl-stylesheets-%{version}
-%define	xmlcat_file		%{website_path}/catalog.xml
+%define	website_path	%{_datadir}/sgml/website
+%define	dtd_path	%{website_path}/xml-dtd-%{version}
+%define	xsl_path	%{website_path}/xsl-stylesheets-%{version}
+%define	xmlcat_file	%{website_path}/catalog.xml
 %define	sgmlcat_file	%{website_path}/catalog
 
 %description
@@ -73,14 +73,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 if ! grep -q %{xmlcat_file} /etc/xml/catalog ; then
-    %xmlcat_add %{xmlcat_file}
-
+	%xmlcat_add %{xmlcat_file}
 fi
 
 %preun
 if [ "$1" = "0" ] ; then
-    %xmlcat_del %{xmlcat_file}
-
+	%xmlcat_del %{xmlcat_file}
 fi
 
 %files
