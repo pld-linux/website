@@ -1,21 +1,34 @@
+
+#
+# todo:
+# - catalog files...
+#
+
 Summary:	Website DTD and XSL stylesheets
 Summary(pl):	Website DTD i arkusze XSL
 Name:		website
-%define		ver 1
-%define		subver 9
-Version:	%{ver}.%{subver}
+Version:	2.2
 Release:	1
-License:	Free (Copyright Norman Walsh)
+License:	Free
 Vendor:		Norman Walsh http://nwalsh.com/
 Group:		Applications/Publishing/XML
-Source0:	http://www.nwalsh.com/website/%{version}}/ws%{ver}%{subver}.zip
-URL:		http://www.nwalsh.com/website/
-Requires:	sgml-common >= 0.5
-Requires:	docbook-dtd412-xml
-Requires:	docbook-style-xsl
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+URL:		http://docbook.sourceforge.net/projects/website/index.html
+Source0:	http://telia.dl.sourceforge.net/sourceforge/docbook/%{name}-%{version}.tar.gz
+Requires:	libxml2-progs >= 2.4.17-6
+BuildRequires:	rpm-build >= 4.0.2-94
+BuildRequires:	/usr/bin/xmlcatalog
+PreReq:		libxml2
+PreReq:		sgml-common
+Requires(post,preun):   /usr/bin/install-catalog
+Requires(post,preun):   /usr/bin/xmlcatalog
 BuildArch:	noarch
-AutoReqProv:	0
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define website_path	%{_datadir}/sgml/website
+%define dtd_path		%{website_path}/xml-dtd-%{version}
+%define xsl_path		%{website_path}/xsl-stylesheets-%{version}
+%define	xmlcat_file		%{dtd_path}/catalog.xml
+%define	sgmlcat_file	%{dtd_path}/catalog
 
 %description
 Website DTD and XSL stylesheets.
@@ -24,22 +37,17 @@ Website DTD and XSL stylesheets.
 Arkusze Website DTD i XSL.
 
 %prep
-%setup -q -c -T
-unzip -qa %{SOURCE0}
-mv -f website/* .
-rmdir website
+%setup -q
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_datadir}/sgml/website/xsl-stylesheets-%{version}
-install -d $RPM_BUILD_ROOT%{_datadir}/sgml/website/xml-dtd-%{version}
+install -d
+$RPM_BUILD_ROOT{%{dtd_path},%{xsl_path},%{_examplesdir}/%{name}-%{version}}
 
-perl -pi -e 's@"/.*docbook.xsl"@"/usr/share/sgml/docbook/xsl-stylesheets/xhtml/docbook.xsl"@' xsl/website.xsl
+install *.dtd *.mod $RPM_BUILD_ROOT%{dtd_path}
+install xsl/* $RPM_BUILD_ROOT%{xsl_path}
+cp -a example/* %{_examplesdir}/%{name}-%{version}
 
-install *.dtd *.mod $RPM_BUILD_ROOT%{_datadir}/sgml/website/xml-dtd-%{version}
-install xsl/* $RPM_BUILD_ROOT%{_datadir}/sgml/website/xsl-stylesheets-%{version}
-
-gzip -9nf COPYRIGHT ChangeLog README WhatsNew
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -52,5 +60,5 @@ rm -f %{_datadir}/sgml/website/xsl-stylesheets
 
 %files
 %defattr(644,root,root,755)
-%doc example *.gz
-%{_datadir}/sgml/*
+%doc ChangeLog README WhatsNew
+%{website_path}
