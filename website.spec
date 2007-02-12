@@ -5,7 +5,7 @@
 #
 
 Summary:	Website DTD and XSL stylesheets
-Summary(pl):	Website DTD i arkusze XSL
+Summary(pl.UTF-8):   Website DTD i arkusze XSL
 Name:		website
 Version:	2.3
 Release:	1
@@ -34,7 +34,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Website DTD and XSL stylesheets.
 
-%description -l pl
+%description -l pl.UTF-8
 Arkusze Website DTD i XSL.
 
 %prep
