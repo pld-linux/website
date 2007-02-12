@@ -5,7 +5,7 @@
 #
 
 Summary:	Website DTD and XSL stylesheets
-Summary(pl.UTF-8):   Website DTD i arkusze XSL
+Summary(pl.UTF-8):	Website DTD i arkusze XSL
 Name:		website
 Version:	2.3
 Release:	1
